@@ -1,43 +1,53 @@
-from ksiazki import lista
-from ksiazki import Ksiazka
-from metody import dodawanie
+import metody
 
+from dane import uzytkownicy
 user = int(input('logujesz sie jako 1.pracownik czy 2.uzytkownik? '))
 if user == 1:
     logowanie = input(('Podaj haslo(1212): '))
     if logowanie == '1212':
         while True:
-            czynnosc = int(input('Jaka czynnosc chcesz wykonac? 1.lista ksiazek, 2.dodaj ksiazke, 3.usun ksiazke   '))
+            czynnosc = int(input(f'Jaka czynnosc chcesz wykonac?\n1.lista ksiazek\n2.dodaj ksiazke\n3.usun ksiazke\n4.wypozycz\n5.zwroc\n6.zaloz konto\n7.lista uzytkownikow\n8.wyszukaj osobe\n9.zakoncz  '))
+            
             if czynnosc == 1:
-                for i in lista:
-                    print(i.szczegoly())
+                metody.wyswietlanie()
 
             if czynnosc == 2:
-                '''tytul = input('Podaj tytul: ').strip().title()
-                autor = input('Podaj autora: ').strip().title()
-                rok = int(input('Podaj rok'))
-                ksiazka_do_dodania = Ksiazka(tytul, autor, rok)
-                lista.append(ksiazka_do_dodania)
-                print('super dodano ksiazke do zbioru')''' #opcja 1 spakowana w pliky metody.py
-
-                dodawanie() #opcja 2, ktora nie dziala nie wiem dlaczego 
-
-
+                metody.dodawanie()
 
             if czynnosc == 3:
-                tytul = input('Podaj tytul: ').upper()
-                autor = input('Podaj autora: ').upper()
-                rok = int(input('Podaj rok'))
-                ksiazka_do_usuniecia = Ksiazka(tytul, autor, rok)
-                if ksiazka_do_usuniecia in lista:
-                    lista.remove(ksiazka_do_usuniecia)
-                    print('super udalo sie usunac ksiazke ze zbioru')
-                else:
-                    print('taka ksiazka nie znajduje sie w zbiorze') 
-                    # mam problem z wielkoscia liter. w jakim miejscu najlepiej bd dodac upper/lower do listy aby wszystko smigalo?
+                metody.usuwanie()
 
-                
+            if czynnosc == 4:
+                metody.wypozyczenie()
+
+            if czynnosc == 5:
+                metody.zwrot()
             
-#mam tez problem aby "if czynnosc == 2 oraz czynnosc == 3" spakowac jako metode w innym pliku tak aby dzialalo 
-# wyskakuje mi taki blad -> cannot import name 'dodawanie' from 'metody'
-#sprawdzaam pisownie i lokalizacje pliku wszystko jest ok wiec nie wiem z czego moze wynikac blad
+            if czynnosc == 6:
+                metody.zaloz_konto()
+
+            if czynnosc == 7:
+                metody.lista_uzytkownikow()
+                
+            if czynnosc == 8:
+                metody.wyszukiwanie_osoby()
+            
+            if czynnosc == 9:
+                break
+    else:
+        print('wpisano zle haslo')
+            
+if user == 2:
+    nazwa = input('Podaj imie i nazwisko: ').split(' ')
+    imieklucz = nazwa[0].strip().capitalize()
+    nazwiskoklucz = nazwa[1].strip().capitalize()
+    for i in uzytkownicy:
+        if i.imie == imieklucz and i.nazwisko == nazwiskoklucz:
+            print('Zalogowano pomyslnie')
+            wybor = int(input(f'Jaka czynnosc chcesz wykonac?\n1.wypozycz ksiazke\n2.zwroc ksiazke\n3.lista twoich wypozyczonych ksiazek\n4.zbior wszystkich ksiazek '))
+            if wybor == 1:
+                metody.wypozycz_uzytkownik()
+                for i in uzytkownicy:
+                    print(i.imie, i.lista_ksiazek)
+            
+
