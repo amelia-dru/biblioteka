@@ -44,38 +44,48 @@ class Dane:
             model.Ksiazka("LALKA", "BOLESLAW PRUS", 1890, 7)
         ]
 
-class Bibliotekarz(Dane):
-    def __init__(self):
-        super().__init__()  # Inicjalizacja klasy bazowej
+class Bibliotekarz:
+    def __init__(self, dane):
+        self.dane = dane
     
     def wyswietlanie(self):
         l = 0
-        for i in self.book:
+        for i in dane.book: #wedlug mnie zapis powinien wygladac tak -> self.dane.book
             l += 1
             print(f'{l}. Tytuł: {i.tytul.title()}, Autor: {i.autor.title()}, Rok wydania: {i.rok}, Dostepna ilsoc: {i.ilosc}')
 
-    def dodawanie(self):
+    def pobieranie_inforamcji_o_ksiazce(self):
         tytul = input('Podaj tytul: ').strip().upper()
         autor = input('Podaj autora: ').strip().upper()
         rok = int(input('Podaj rok: '))
+        return tytul, autor, rok
+    
+    def pobieranie_danych_uzytkownika(self):
+        nazwa = input('Podaj imie i nzawisko: ').strip().split(' ')
+        imie = nazwa[0].capitalize()
+        nazwisko = nazwa[1].capitalize()
+        wiek = int(input('Podaj wiek: '))
+        return imie, nazwisko, wiek
+
+    def dodawanie(self):
+        tytul, autor, rok = self.pobieranie_inforamcji_o_ksiazce()
         znalezienie = False
-        for i in self.book:
-            if i.tytul == tytul and i.autor == autor and i.rok == rok:
+        for i in dane.book: #wedlug mnie -> self.dane.book
+            if i.tytul == tytul and  i.autor == autor and i.rok == rok:
                 i.ilosc += 1
                 znalezienie = True
                 break
         if znalezienie == False:
             ksiazka_do_dodania = model.Ksiazka(tytul, autor, rok, 1)
-            self.book.append(ksiazka_do_dodania)
+            dane.book.append(ksiazka_do_dodania) #-> #wedlug mnie -> self.dane.book
             print('super dodano ksiazke do zbioru')
 
     def usuwanie(self):
-        tytul = input('Podaj tytul: ').upper()
-        autor = input('Podaj autora: ').upper()
+        tytul, autor = self.pobieranie_inforamcji_o_ksiazce()
         znalezniono = False
-        for i in self.book:
+        for i in dane.book: #wedlug mnie -> self.dane.book
             if i.tytul == tytul and i.autor == autor:
-                self.book.remove(i)
+                dane.book.remove(i) #wedlug mnie -> self.dane.book.remove
                 print(f'ksiazka {i.szczegoly()} zostala usunieta')
                 znalezniono = True
                 break
@@ -83,14 +93,12 @@ class Bibliotekarz(Dane):
             print('ksiazka nie wystepuje w naszym zbiorze.')
 
     def wypozyczenie(self):
-        nazwa = input('Podaj imie i nzawisko: ').strip().split(' ')
-        imie = nazwa[0].capitalize()
-        nazwisko = nazwa[1].capitalize()
+        imie, nazwisko = self.pobieranie_danych_uzytkownika()
         znalazlam = False
-        for i in self.user:
+        for i in dane.user: ##wedlug mnie -> self.dane.user
             if i.imie == imie and i.nazwisko == nazwisko:
                 tytul = input('Podaj tytul ksiazki: ').strip().upper()
-                for ii in self.book:
+                for ii in dane.book: #wedlug mnie -> self.dane.book
                     if ii.tytul == tytul:
                         if ii.ilosc >= 1:
                             ii.ilosc -= 1
@@ -105,7 +113,7 @@ class Bibliotekarz(Dane):
 
     def lista_uzytkownikow(self):
         liczba = 0
-        for i in self.user:
+        for i in dane.user: #wedlug mnie -> self.dane.user
             liczba += 1
             if len(i.lista_ksiazek) == 0:
                 print(f'{liczba}. Imie i nazwisko: {i.imie} {i.nazwisko}, wiek: {i.wiek}, lista ksiazek: BRAK')
@@ -113,18 +121,16 @@ class Bibliotekarz(Dane):
                 print(f'{liczba}. Imie i nazwisko: {i.imie} {i.nazwisko}, wiek: {i.wiek}, lista ksiazek: {i.lista_ksiazek}')
 
     def zwrot(self):
-        nazwa = input('Podaj imie i nzawisko: ').strip().split(' ')
-        imie = nazwa[0].capitalize()
-        nazwisko = nazwa[1].capitalize()
+        imie, nazwisko = self.pobieranie_danych_uzytkownika()
         znalazlam = False
         brak_imienia = False
-        for i in self.user:
+        for i in dane.user: #wedlug mnie -> self.dane.user
             if i.imie == imie and i.nazwisko == nazwisko:
                 tytul = input('Podaj tytul: ').strip().upper()
                 brak_imienia = True
                 if tytul in i.lista_ksiazek:
                     i.lista_ksiazek.remove(tytul)
-                    for x in self.book:
+                    for x in dane.book: #wedlug mnie -> self.dane.book
                         if tytul == x.tytul:
                             x.ilosc += 1
                             print('dzieki za zwrot!')
@@ -156,32 +162,27 @@ class Bibliotekarz(Dane):
                     except ValueError:
                         print('Podaj rok w postaci liczb.')
 
-                self.book.append(model.Ksiazka(tytul, autor, rok, 1))
+                dane.book.append(model.Ksiazka(tytul, autor, rok, 1)) #wedlug mnie -> self.dane.book.append
                 print('Dzięki za poszerzenie naszego zbioru!')
             else:
                 print('Okej.')
     
     def zaloz_konto(self):
-        nazwa = input('Podaj imie i nzawisko: ').strip().split(' ')
-        imie = nazwa[0].capitalize()
-        nazwisko = nazwa[1].capitalize()
-        wiek = int(input('Podaj wiek: '))
+        imie, nazwisko, wiek = self.pobieranie_danych_uzytkownika()
         znaleziono = False
-        for i in self.user:
+        for i in dane.user: #wedlug mnie -> self.dane.user
             if i.imie == imie and i.nazwisko == nazwisko:
                 print('Taka osoba juz posiada konto w naszej bibliotece')
                 znaleziono = True
                 break
         if znaleziono == False:
-            self.user.append(model.Uzytkownik(imie, nazwisko, wiek))
+            dane.user.append(model.Uzytkownik(imie, nazwisko, wiek)) #wedlug mnie -> self.dane.user.apppend
             print(f'super udalo zalozyc sie konto dla uczytkownika {imie} {nazwisko}')
 
     def wyszukiwanie_osoby(self):
-        nazwa = input('Podaj imie i nzawisko: ').strip().split(' ')
-        imie = nazwa[0].capitalize()
-        nazwisko = nazwa[1].capitalize()
+        imie, nazwisko, wiek = self.pobieranie_danych_uzytkownika()
         znaleziono = False
-        for i in self.user:
+        for i in dane.user: #wedlug mnie -> self.dane.user
             if i.imie == imie and i.nazwisko == nazwisko:
                 if len(i.lista_ksiazek) == 0:
                     print(f'Imie i nazwisko: {i.imie} {i.nazwisko}, wiek: {i.wiek}, lista ksiazek: BRAK')
@@ -192,16 +193,17 @@ class Bibliotekarz(Dane):
         if znaleziono == False:
             print('Uzytkownik nie znajduje sie w naszej bazie')
 
-class Uzytkownik(Dane):
-    def __init__(self, nazwa):
-        super().__init__()
+class Uzytkownik:
+    def __init__(self, nazwa, dane):
+        self.dane = dane
         self.znalezienie = False
-        self.nazwa = nazwa
-        self.imie = self.nazwa[0].capitalize()
-        self.nazwisko = self.nazwa[1].capitalize()
+        self.nazwa = nazwa.strip()
+        podzial = self.nazwa.split(' ')
+        self.imie = podzial[0]
+        self.nazwisko = podzial[1]
         try:   
             if len(self.nazwa) > 1: 
-                for i in self.user:
+                for i in self.dane.user:    #nie wiem jak to zapisac
                     if i.imie == self.imie and i.nazwisko == self.nazwisko:
                         self.znalezienie = True
                         break
@@ -220,10 +222,10 @@ class Uzytkownik(Dane):
         tytul = input('Wpisz tytul: ').strip().upper()
         autor = input('Wpisz autora: ').strip().upper()
         znalezienie = False
-        for i in self.book:
+        for i in dane.book: #dalczego nie self.dane.book?
             if i.tytul == tytul and i.autor == autor and i.dostepnosc >= 1:
                 znalezienie = True
-                for y in self.user:
+                for y in dane.user:#dalczego nie self.dane.book?
                     if y.imie == self.imie and y.nazwisko == self.nazwisko:
                         i.ilosc -= 1
                         y.lista_ksiazek.append(i.tytul)
@@ -237,10 +239,10 @@ class Uzytkownik(Dane):
         tytul = input('Podaj tytul: ').strip().upper()
         autor = input('Podaj autora: ').strip().upper()
         znalezienie = False
-        for i in self.book:
+        for i in dane.book:#dalczego nie self.dane.book?
             if i.autor == autor and i.tytul == tytul:
                 znalezienie = True
-                for y in self.user:
+                for y in dane.user:#dalczego nie self.dane.user?
                     if y.imie == self.imie and y.nazwisko == self.nazwisko:
                         i.ilosc += 1
                         y.lista_ksiazek.remove(i.tytul)
@@ -252,9 +254,9 @@ class Uzytkownik(Dane):
     def lista(self):
         n = 0
         print()
-        for i in self.book:
+        for i in dane.book:#dalczego nie self.dane.book?
             n += 1
             print(f'{n}.Tytuł: {i.tytul}, Autor: {i.autor}, Rok: {i.rok}, Ilość: {i.ilosc}')
 
-
-bibliotekarz = Bibliotekarz()
+dane = Dane()
+bibliotekarz = Bibliotekarz(dane)
