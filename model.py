@@ -1,4 +1,4 @@
-#bibliotekarz
+
 import random
 
 id_user = 0
