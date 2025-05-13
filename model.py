@@ -16,26 +16,11 @@ class Ksiazka:
         self.id = id_book
 
     def szczegoly(self):
-        return f'tytul: {self.tytul}, autor: {self.autor}, rok: {self.rok}, id: {self.id}, ilosc: {self.ilosc}'
+        return f'tytul -> {self.tytul}, autor -> {self.autor}, rok -> {self.rok}, id ->  {self.id}, ilosc -> {self.ilosc}'
 
+    def __str__(self):
+        return self.szczegoly()
 
-lista = [
-    Ksiazka("SHERLOCK HOLMES: STUDIUM W SZKARLACIE", "ARTHUR CONAN DOYLE", 1887, 5),
-    Ksiazka("ZBRODNIA I KARA", "FIODOR DOSTOJEWSKI", 1866, 2 ),
-    Ksiazka("DUMA I UPRZEDZENIE", "JANE AUSTEN", 1813, 1),
-    Ksiazka("ROK 1984", "GEORGE ORWELL", 1949, 5),
-    Ksiazka("WLADCA PIERSCIENI", "J.R.R. TOLKIEN", 1954, 8),
-    Ksiazka("MISTRZ I MALGORZATA", "MICHAIL BULHAKOW", 1967, 2),
-    Ksiazka("HOBBIT", "J.R.R. TOLKIEN", 1937, 3),
-    Ksiazka("MALY KSIAZE", "ANTOINE DE SAINT-EXUPERY", 1943, 1),
-    Ksiazka("BUSZUJACY W ZBOZU", "J.D. SALINGER", 1951, 7),
-    Ksiazka("HARRY POTTER I KAMIEN FILOZOFICZNY", "J.K. ROWLING", 1997, 2),
-    Ksiazka("IMIE ROZY", "UMBERTO ECO", 1980, 1),
-    Ksiazka("GRA O TRON", "GEORGE R.R. MARTIN", 1996, 1),
-    Ksiazka("FOLWARK ZWIERZECY", "GEORGE ORWELL", 1945, 8),
-    Ksiazka("OJCIEC CHRZESTNY", "MARIO PUZO", 1969, 2),
-    Ksiazka("LALKA", "BOLESLAW PRUS", 1890, 7)
-]
 
 class Uzytkownik():
     def __init__(self, imie, nazwisko, wiek:int):
