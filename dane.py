@@ -14,7 +14,6 @@ class Dane:
             model.Uzytkownik("Michał", "Szymański", 45),
             model.Uzytkownik("Aleksandra", "Woźniak", 29)
         ]
-
         self.book = [
             model.Ksiazka("SHERLOCK HOLMES: STUDIUM W SZKARLACIE", "ARTHUR CONAN DOYLE", 1887, 5),
             model.Ksiazka("ZBRODNIA I KARA", "FIODOR DOSTOJEWSKI", 1866, 2 ),
@@ -32,5 +31,17 @@ class Dane:
             model.Ksiazka("OJCIEC CHRZESTNY", "MARIO PUZO", 1969, 2),
             model.Ksiazka("LALKA", "BOLESLAW PRUS", 1890, 7)
         ]
+
+    def spis_ksiazek(self):
+        n = 0
+        spis = ""
+        for i in self.book:
+            n += 1
+            spis += (f'{n}. Tytuł -> {i.tytul}, Autor -> {i.autor}, rok wydania -> {i.rok}, ilość -> {i.ilosc}\n')
+        return spis
+
+    def lista_uzytkownikow(self):
+        for i in self.user:
+            print(f'Imie i nazwisko: {i.imie} {i.nazwisko}, wiek: {i.wiek}, wypozyczone ksiazki {i.lista_ksiazek}')
 
 dane = Dane()
