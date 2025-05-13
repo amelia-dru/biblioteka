@@ -1,69 +1,73 @@
-import klasy
-import model
-from klasy import dane
-
-#kod klasy podzielilam na osobne pliki ale nie moge tego zimportowac nie wiem czemu'
-#w klasach oddzielilam inputa aby byl latwiejszy do pozniejszej edyc
-#szkielet glownego programu zostal przerobiony tak aby bylo mozna przelaczac sie pomiedzy uzytkownikiem oraz pracownikiem. wszystko powinno smigac 
-
-
-'''import dane
+import dane
 import bibliotekarz
 import uzyt
-import model''' # nie dziala mi 
+import data
+
+info = dane.Dane()
 
 while True:
-    user = int(input('logujesz sie jako 1.pracownik czy 2.uzytkownik? '))
+    user = int(input('logujesz sie jako 1.pracownik czy 2.uzytkownik? lub 3.koniec '))
     if user == 1:
         logowanie = input(('Podaj haslo(1212): '))
         if logowanie == '1212':
             while True:
-                czynnosc = int(input(f'Jaka czynnosc chcesz wykonac?\n1.lista ksiazek\n2.dodaj ksiazke\n3.usun ksiazke\n4.wypozycz\n5.zwroc\n6.zaloz konto\n7.lista uzytkownikow\n8.wyszukaj osobe\n9.zakoncz  '))
+                biblio = bibliotekarz.Bibliotekarz(info)
+                biblio.wczytywanie_z_pliku_ksiazki()
+                biblio.wczytywanie_uzytkownikow_z_listy()
+                czynnosc = int(input(f'Jaka czynnosc chcesz wykonac?\n1.lista ksiazek\n2.dodaj ksiazke\n3.usun ksiazke\n'
+                                     f'4.wypozycz\n5.zwroc\n6.zaloz konto\n7.lista uzytkownikow\n8.wyszukaj osobe\n'
+                                     f'9.zapisz do pliku spis ksiazek\n10.zapisz do pliku spisu uzytkownikow\n11.zakoncz '))
                 
                 if czynnosc == 1:
-                    klasy.bibliotekarz.wyswietlanie()
+                    biblio.wyswietlanie()
 
                 if czynnosc == 2:
-                    klasy.bibliotekarz.dodawanie()
+                    biblio.dodawanie()
 
                 if czynnosc == 3:
-                    klasy.bibliotekarz.usuwanie()
+                    biblio.usuwanie()
 
                 if czynnosc == 4:
-                    klasy.bibliotekarz.wypozyczenie()
+                    biblio.wypozyczenie()
 
                 if czynnosc == 5:
-                    klasy.bibliotekarz.zwrot()
+                    biblio.zwrot()
                 
                 if czynnosc == 6:
-                    klasy.bibliotekarz.zaloz_konto()
+                    biblio.zaloz_konto()
 
                 if czynnosc == 7:
-                    klasy.bibliotekarz.lista_uzytkownikow()
+                    biblio.lista_uzytkownikow()
                 
                 if czynnosc == 8:
-                    klasy.bibliotekarz.wyszukiwanie_osoby()
+                    biblio.wyszukiwanie_osoby()
                 
                 if czynnosc == 9:
+                    biblio.zapisywanie_ksiazek()
+
+                if czynnosc == 10:
+                    biblio.zapisywanie_listy_uzyt()
+                
+                if czynnosc == 11:
                     break
         else:
             print('wpisano zle haslo')
                 
     if user == 2:
         nazwa = input('Podaj imie i nazwisko: ').strip().split(' ')
-        uzyt = klasy.Uzytkownik(nazwa, dane)
-        uzyt.logowanie()
-        if uzyt.znalezienie == True:
+        uzyt1 = uzyt.Uzytkownik(nazwa, dane)
+        uzyt1.logowanie()
+        if uzyt1.znalezienie == True:
             while True:
                 wybor = int(input(f'Jaka czynnosc chcesz wykonac?\n1.wypozycz ksiazke\n2.zwroc ksiazke\n3.zobacz zbior ksiazek\n4.zakoncz '))
                 if wybor == 1:
-                    uzyt.wypozyczenie() 
+                    uzyt1.wypozyczenie() 
 
                 if wybor == 2:
-                    uzyt.zwroc()
+                    uzyt1.zwroc()
 
                 if wybor == 3:
-                    uzyt.lista()
+                    uzyt1.lista()
 
                 if wybor == 4:
                     break
