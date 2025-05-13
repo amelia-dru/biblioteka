@@ -1,4 +1,4 @@
-import data
+import biblioteka.data as data
 import dane
 import model
 
@@ -6,10 +6,10 @@ class Uzytkownik:
     def __init__(self, nazwa, dane):
         self.dane = dane
         self.znalezienie = False
-        self.nazwa = nazwa.strip()
+        self.nazwa = nazwa
         podzial = self.nazwa.split(' ')
-        self.imie = podzial[0]
-        self.nazwisko = podzial[1]
+        self.imie = podzial.strip()[0]
+        self.nazwisko = podzial.strip()[1]
         try:   
             if len(self.nazwa) > 1: 
                 for i in self.dane.user:    #nie wiem jak to zapisac
@@ -63,6 +63,6 @@ class Uzytkownik:
     def lista(self):
         n = 0
         print()
-        for i in dane.book:#dalczego nie self.dane.book?
+        for i in dane.book:
             n += 1
             print(f'{n}.Tytuł: {i.tytul}, Autor: {i.autor}, Rok: {i.rok}, Ilość: {i.ilosc}')
