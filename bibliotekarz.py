@@ -9,20 +9,20 @@ class Bibliotekarz:
 
     def lokalizowanie_pliku_z_uzytkowniakmi(self):
         self.find_uzyt = False
-        if os.path.exists("spis_uzytklownikow.txt"):
+        if os.path.exists("spis_uzytkownikow.txt"):
             self.find_uzyt = True
 
     def wczytywanie_uzytkownikow_z_listy(self):
         self.lokalizowanie_pliku_z_uzytkowniakmi()
         if self.find_uzyt == True:
-            with open('spis_uzytkownikow.txt', 'r') as plik:
+            with open('spis_uzytkownikow.txt', 'r') as plikk:
                 i = []
                 nazwa = []
                 w = []
                 imie = []
                 nazwisko = []
                 wiek = []
-                for z in plik:
+                for z in plikk:
                     podzial = z.split(':')
                     i.append(podzial[1])
                     w.append(podzial[2])
@@ -236,9 +236,23 @@ class Bibliotekarz:
                 n += 1
                 lista_ksiazek.write(f"{n}. tytul -> {ii.tytul}, autor -> {ii.autor}, rok: -> {ii.rok}, ilosc -> {ii.ilosc}\n")
 
+    def usuwanie_uztykownikow(self):
+        self.pobieranie_danych_uzytkownika()
+        znal = False
+        for i in self.lista_uzyt_finalna:
+            if i.imie == self.metofa_uzyt_imie and i.nazwisko == self.metofa_uzyt_nazwisko and int(i.wiek) == int(self.metofa_uzyt_wiek):
+                znal = True
+                self.lista_uzyt_finalna.remove(i)
+                break
+        if not znal:
+            print('Taka osoba nie znajduje sie w naszym systemie.')
+        
+        self.zapisywanie_listy_uzyt()
+
+
     def zapisywanie_listy_uzyt(self):
         with open('spis_uzytkownikow.txt', 'w') as plik:
             n = 0
-            for i in self.info.user:
+            for i in self.lista_uzyt_finalna:
                 n += 1
                 plik.write(f'{n}. imie: {i.imie} {i.nazwisko}, wiek: {i.wiek}\n')
