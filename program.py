@@ -16,7 +16,7 @@ while True:
                 biblio.wczytywanie_uzytkownikow_z_listy()
                 czynnosc = int(input(f'Jaka czynnosc chcesz wykonac?\n1.lista ksiazek\n2.dodaj ksiazke\n3.usun ksiazke\n'
                                      f'4.wypozycz\n5.zwroc\n6.zaloz konto\n7.lista uzytkownikow\n8.wyszukaj osobe\n'
-                                     f'9.zapisz do pliku spis ksiazek\n10.zapisz do pliku spisu uzytkownikow\n11.zakoncz '))
+                                     f'9.zapisz do pliku spis ksiazek\n10.zapisz do pliku spisu uzytkownikow\n11.usuwanie uzytkownika z systemu\n12.zakoncz '))
                 
                 if czynnosc == 1:
                     biblio.wyswietlanie()
@@ -47,8 +47,11 @@ while True:
 
                 if czynnosc == 10:
                     biblio.zapisywanie_listy_uzyt()
-                
+
                 if czynnosc == 11:
+                    biblio.usuwanie_uztykownikow()
+                
+                if czynnosc == 12:
                     break
         else:
             print('wpisano zle haslo')
